@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>BlueCrude - Booking Page</title>
+    <style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #a8e0f0;
+			margin: 0;
+			padding: 0;
+		}
+
+		h1 {
+			text-align: center;
+			color: #03233f;
+			margin-top: 50px;
+		}
+
+		form {
+			background-color: #94f3d5;
+			width: 60%;
+			margin: 0 auto;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 2px 5px rgba(180, 217, 237, 0.3);
+		}
+
+		label {
+			display: inline-block;
+			margin-bottom: 10px;
+			font-weight: bold;
+			color: #316097;
+		}
+
+		input[type="text"],
+		input[type="email"],
+		input[type="tel"],
+		textarea,
+		select {
+			width: 100%;
+			padding: 12px;
+			border: 1px solid #BBDEFB;
+			border-radius: 4px;
+			resize: vertical;
+		}
+
+		input[type="checkbox"] {
+			display: inline-block;
+			margin-right: 10px;
+		}
+
+		button[type="button"] {
+			background-color: #2196F3;
+			color: #FFF;
+			padding: 12px 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			margin-top: 20px;
+		}
+
+		button[type="button"]:hover {
+			background-color: #1565C0;
+		}
+
+		#bookingDetails {
+			margin-top: 20px;
+			padding: 20px;
+			background-color: #FFFFFF;
+			width: 60%;
+			margin: 0 auto;
+			border-radius: 10px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+		}
+
+		#errorMessages {
+			color: #D50000;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>BlueCrude - Booking Page</h1>
+
+	<form >
+		<label for="service">Enter your Name : </label>
+		<input type="text" id="service" name="service" required><br><br>
+
+		<label for="date">Booking Date:</label>
+		<input type="date" id="date" name="date" required><br><br>
+
+		<label>Product:</label><br>
+        <label>(All the products are 1L pouch)</label><br>
+		<input type="checkbox" id="product1" name="product" value="Product 1" required>
+		<label for="product1">sunflower Oil</label><br>
+		<input type="checkbox" id="product2" name="product" value="Product 2" required>
+		<label for="product2">soyabean oil</label><br>
+		<input type="checkbox" id="product3" name="product" value="Product 3" required>
+		<label for="product3">mustard oil</label><br>
+        <input type="checkbox" id="product4" name="product" value="Product 4" required>
+		<label for="product4">coconut oil</label><br>
+		<input type="checkbox" id="product5" name="product" value="Product 5" required>
+		<label for="product5">refined oil</label><br>
+		<input type="checkbox" id="product6" name="product" value="Product 6" required>
+		<label for="product6">palm oil</label><br>
+        <input type="checkbox" id="product7" name="product" value="Product 7" required>
+		<label for="product7">groundnut Oil</label><br>
+		
+		<label>Quantity:</label>
+		<select id="quantity" name="quantity">
+            <option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+		</select><br><br>
+
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email" required>
+		<span id="emailError" style="color: red;"></span><br><br>
+
+		<label for="phone">Phone Number:</label>
+		<input type="tel" id="phone" name="phone" required>
+		<span id="phoneError" style="color: red;"></span><br><br>
+
+		<label>Customer Reviews: </label><br>
+		<textarea id="comments" name="comments" rows="1" cols="20"></textarea><br><br>
+
+		<button type="button" onclick="displayBooking()">Book Now</button>
+	</form>
+
+	<script>
+		function displayBooking() {
+			var service = document.getElementById("service").value;
+			var date = document.getElementById("date").value;
+			var products = document.getElementsByName("product");
+			var quantity = document.getElementById("quantity").value;
+			var comments = document.getElementById("comments").value;
+			var email = document.getElementById("email").value;
+			var phone = document.getElementById("phone").value;
+
+			// Email validation
+			var emailPattern = /^[^\s@]+@[^\s@]+\.(com|edu|org|net)$/;
+            if (!emailPattern.test(email)) {
+            document.getElementById("emailError").innerHTML = "Invalid email address";
+            return;
+            } else {
+            document.getElementById("emailError").innerHTML = "";
+            }
+
+
+			// Phone validation
+			var phonePattern = /^\+\d{2}\s?\d{10}$/;
+			if (!phonePattern.test(phone)) {
+				document.getElementById("phoneError").innerHTML = "Invalid phone number";
+				return;
+			} else {
+				document.getElementById("phoneError").innerHTML = "";
+			}
+
+			var productDetails = "";
+			for (var i = 0; i < products.length; i++) {
+				if (products[i].checked) {
+					productDetails += products[i].value + ", ";
+				}
+
+
+			}
+			productDetails = productDetails.slice(0, -2);
+
+			var currentDate = new Date();
+			var output = "Booking Date: " + currentDate.toLocaleDateString() + "<br><br>";
+            output += "Mr."+"Name : " + service + "<br><br>";
+			output += "Products Booked: " + productDetails + "<br><br>";
+			output += "Quantity: " + quantity + "<br><br>";
+			output += "Reviews: " + comments + "<br><br>";
+
+			document.getElementById("bookingDetails").innerHTML = output;
+		}
+	</script>
+<div id="bookingDetails"></div>
+</body>
+</html>
